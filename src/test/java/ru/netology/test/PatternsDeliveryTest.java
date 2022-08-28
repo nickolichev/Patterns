@@ -16,11 +16,11 @@ public class PatternsDeliveryTest {
   String correctCity = DataGenerator.Registration.generateCorrectCity();
   String incorrectCity = DataGenerator.Registration.searchInvalidCity();
   String incorrectCityLatin = DataGenerator.Registration.generateCityLatin();
-  String correctName = DataGenerator.Registration.generateCorrectName();
+  String correctFullName = DataGenerator.Registration.generateCorrectFullName();
   String correctNameWithHyphen = DataGenerator.Registration.generateCorrectNameWithHyphen();
   String incorrectNameLatin = DataGenerator.Registration.generateIncorrectNameLatin();
   String incorrectNameUnderline = DataGenerator.Registration.generateIncorrectNameUnderline();
-  String incorrectNameLettersWithUmlaut = DataGenerator.Registration.generateIncorrectNameLettersWithUmlaut();
+  String incorrectNameLettersWithUmlaut = DataGenerator.Registration.generateIncorrectNameWithLettersUmlaut();
   String correctPhone = DataGenerator.Registration.generateCorrectPhone();
   String incorrectPhoneFewerDigits = DataGenerator.Registration.generateIncorrectPhoneFewerDigits();
   String incorrectPhoneCodeCountry = DataGenerator.Registration.generateIncorrectPhoneCodeCountry();
@@ -39,7 +39,7 @@ public class PatternsDeliveryTest {
     $x("//input[@placeholder='Город']").setValue(correctCity);
     $x("//input[@placeholder='Дата встречи']").doubleClick().sendKeys(Keys.BACK_SPACE);
     $x("//input[@placeholder='Дата встречи']").setValue(firstMeeting);
-    $x("//input[@name='name']").setValue(correctName);
+    $x("//input[@name='name']").setValue(correctFullName);
     $x("//input[@placeholder='+7 000 000 00 00']").setValue(correctPhone);
     $x("//*[@data-test-id='agreement']").click();
     $x("//*[@class='button__text']").click();
@@ -52,7 +52,7 @@ public class PatternsDeliveryTest {
     $x("//input[@placeholder='Город']").setValue(correctCity);
     $x("//input[@placeholder='Дата встречи']").doubleClick().sendKeys(Keys.BACK_SPACE);
     $x("//input[@placeholder='Дата встречи']").setValue(firstMeeting);
-    $x("//input[@name='name']").setValue(correctName);
+    $x("//input[@name='name']").setValue(correctFullName);
     $x("//input[@placeholder='+7 000 000 00 00']").setValue(correctPhone);
     $x("//*[@data-test-id='agreement']").click();
     $x("//*[@class='button__text']").click();
@@ -72,7 +72,7 @@ public class PatternsDeliveryTest {
     $x("//input[@placeholder='Город']").setValue(incorrectCity);
     $x("//input[@placeholder='Дата встречи']").doubleClick().sendKeys(Keys.BACK_SPACE);
     $x("//input[@placeholder='Дата встречи']").sendKeys(firstMeeting);
-    $x("//input[@name='name']").setValue(correctName);
+    $x("//input[@name='name']").setValue(correctFullName);
     $x("//input[@placeholder='+7 000 000 00 00']").setValue(correctPhone);
     $x("//*[@data-test-id='agreement']").click();
     $x("//*[@class='button__text']").click();
@@ -80,13 +80,13 @@ public class PatternsDeliveryTest {
             .shouldBe(Condition.text("Доставка в выбранный город недоступна"));
   }
 
-  // тестирование бага, см. issues "Система не принимает валидный город "Гатчина". Город в списке"
+  // тестирование бага, см. issues "Система не принимает город "Гатчина". Город в списке валидных городов"
   @Test
   void testIncorrectFillingCityGatchina() {
     $x("//input[@placeholder='Город']").setValue("Гатчина");
     $x("//input[@placeholder='Дата встречи']").doubleClick().sendKeys(Keys.BACK_SPACE);
     $x("//input[@placeholder='Дата встречи']").sendKeys(firstMeeting);
-    $x("//input[@name='name']").setValue(correctName);
+    $x("//input[@name='name']").setValue(correctFullName);
     $x("//input[@placeholder='+7 000 000 00 00']").setValue(correctPhone);
     $x("//*[@data-test-id='agreement']").click();
     $x("//*[@class='button__text']").click();
@@ -94,13 +94,13 @@ public class PatternsDeliveryTest {
             .shouldBe(Condition.text("Доставка в выбранный город недоступна"));
   }
 
-  // тестирование бага, см. issues "Система не принимает валидный город "Красногорск". Город в списке"
+  // тестирование бага, см. issues "Система не принимает город "Красногорск". Город в списке валидных городов"
   @Test
   void testIncorrectFillingCityKrasnogorsk() {
     $x("//input[@placeholder='Город']").setValue("Красногорск");
     $x("//input[@placeholder='Дата встречи']").doubleClick().sendKeys(Keys.BACK_SPACE);
     $x("//input[@placeholder='Дата встречи']").sendKeys(firstMeeting);
-    $x("//input[@name='name']").setValue(correctName);
+    $x("//input[@name='name']").setValue(correctFullName);
     $x("//input[@placeholder='+7 000 000 00 00']").setValue(correctPhone);
     $x("//*[@data-test-id='agreement']").click();
     $x("//*[@class='button__text']").click();
@@ -113,7 +113,7 @@ public class PatternsDeliveryTest {
     $x("//input[@placeholder='Город']").setValue(incorrectCityLatin);
     $x("//input[@placeholder='Дата встречи']").doubleClick().sendKeys(Keys.BACK_SPACE);
     $x("//input[@placeholder='Дата встречи']").sendKeys(firstMeeting);
-    $x("//input[@name='name']").setValue(correctName);
+    $x("//input[@name='name']").setValue(correctFullName);
     $x("//input[@placeholder='+7 000 000 00 00']").setValue(correctPhone);
     $x("//*[@data-test-id='agreement']").click();
     $x("//*[@class='button__text']").click();
@@ -126,7 +126,7 @@ public class PatternsDeliveryTest {
     $x("//input[@placeholder='Город']").setValue("");
     $x("//input[@placeholder='Дата встречи']").doubleClick().sendKeys(Keys.BACK_SPACE);
     $x("//input[@placeholder='Дата встречи']").sendKeys(firstMeeting);
-    $x("//input[@name='name']").setValue(correctName);
+    $x("//input[@name='name']").setValue(correctFullName);
     $x("//input[@placeholder='+7 000 000 00 00']").setValue(correctPhone);
     $x("//*[@data-test-id='agreement']").click();
     $x("//*[@class='button__text']").click();
@@ -139,7 +139,7 @@ public class PatternsDeliveryTest {
     $x("//input[@placeholder='Город']").setValue(correctCity);
     $x("//input[@placeholder='Дата встречи']").doubleClick().sendKeys(Keys.BACK_SPACE);
     $x("//input[@placeholder='Дата встречи']").sendKeys(incorrectMeeting);
-    $x("//input[@name='name']").setValue(correctName);
+    $x("//input[@name='name']").setValue(correctFullName);
     $x("//input[@placeholder='+7 000 000 00 00']").setValue(correctPhone);
     $x("//*[@data-test-id='agreement']").click();
     $x("//*[@class='button__text']").click();
@@ -151,7 +151,7 @@ public class PatternsDeliveryTest {
   void testIncorrectFillingDateEmpty() {
     $x("//input[@placeholder='Город']").setValue(correctCity);
     $x("//input[@placeholder='Дата встречи']").doubleClick().sendKeys(Keys.BACK_SPACE);
-    $x("//input[@name='name']").setValue(correctName);
+    $x("//input[@name='name']").setValue(correctFullName);
     $x("//input[@placeholder='+7 000 000 00 00']").setValue(correctPhone);
     $x("//*[@data-test-id='agreement']").click();
     $x("//*[@class='button__text']").click();
@@ -229,7 +229,7 @@ public class PatternsDeliveryTest {
     $x("//input[@placeholder='Город']").setValue(correctCity);
     $x("//input[@placeholder='Дата встречи']").doubleClick().sendKeys(Keys.BACK_SPACE);
     $x("//input[@placeholder='Дата встречи']").sendKeys(firstMeeting);
-    $x("//input[@name='name']").setValue(correctName);
+    $x("//input[@name='name']").setValue(correctFullName);
     $x("//input[@placeholder='+7 000 000 00 00']").setValue("");
     $x("//*[@data-test-id='agreement']").click();
     $x("//*[@class='button__text']").click();
@@ -243,7 +243,7 @@ public class PatternsDeliveryTest {
     $x("//input[@placeholder='Город']").setValue(correctCity);
     $x("//input[@placeholder='Дата встречи']").doubleClick().sendKeys(Keys.BACK_SPACE);
     $x("//input[@placeholder='Дата встречи']").sendKeys(firstMeeting);
-    $x("//input[@name='name']").setValue(correctName);
+    $x("//input[@name='name']").setValue(correctFullName);
     $x("//input[@placeholder='+7 000 000 00 00']").setValue(incorrectPhoneFewerDigits);
     $x("//*[@data-test-id='agreement']").click();
     $x("//*[@class='button__text']").click();
@@ -251,13 +251,12 @@ public class PatternsDeliveryTest {
             .should(Condition.text("Успешно"));
   }
 
-  // тестирование бага, см. issues
   @Test
   void testInCorrectFillingPhoneCodeCountry() {
     $x("//input[@placeholder='Город']").setValue(correctCity);
     $x("//input[@placeholder='Дата встречи']").doubleClick().sendKeys(Keys.BACK_SPACE);
     $x("//input[@placeholder='Дата встречи']").sendKeys(firstMeeting);
-    $x("//input[@name='name']").setValue(correctName);
+    $x("//input[@name='name']").setValue(correctFullName);
     $x("//input[@placeholder='+7 000 000 00 00']").setValue(incorrectPhoneCodeCountry);
     $x("//*[@data-test-id='agreement']").click();
     $x("//*[@class='button__text']").click();
@@ -270,7 +269,7 @@ public class PatternsDeliveryTest {
     $x("//input[@placeholder='Город']").setValue(correctCity);
     $x("//input[@placeholder='Дата встречи']").doubleClick().sendKeys(Keys.BACK_SPACE);
     $x("//input[@placeholder='Дата встречи']").sendKeys(firstMeeting);
-    $x("//input[@name='name']").setValue(correctName);
+    $x("//input[@name='name']").setValue(correctFullName);
     $x("//input[@name='phone']").setValue(correctPhone);
     $x("//*[@class='button__text']").click();
     $x("//*[@role='presentation']")

@@ -15,27 +15,73 @@ public class DataGenerator {
     private Registration() {
     }
 
-    public static String generateCorrectName() {
+    public static String generateRandomLastNamePartOne() {
       Faker faker = new Faker(new Locale("ru"));
-      return faker.name().lastName() + " " + faker.name().firstName();
+      return faker.name().lastName();
+    }
+
+    public static String generateRandomLastNamePartTwo() {
+      Faker faker = new Faker(new Locale("ru"));
+      return faker.name().lastName();
+    }
+
+    public static String generateRandomFirstName() {
+      Faker faker = new Faker(new Locale("ru"));
+      return faker.name().firstName();
+    }
+
+    public static String generateCorrectFullName() {
+      while (true) {
+        String randomLastName = generateRandomLastNamePartOne();
+        String randomFirstName = generateRandomFirstName();
+        if (checkIfRandomFullNameIsInvalid(generateRandomLastNamePartOne(), generateRandomFirstName())) {
+          return randomLastName + " " + randomFirstName;
+        }
+      }
+    }
+
+    public static boolean checkIfRandomFullNameIsInvalid(String lastName, String firstName) {
+      if (lastName.contains("ё") || firstName.contains("ё")) {
+        return false;
+      }
+      return true;
     }
 
     public static String generateCorrectNameWithHyphen() {
-      Faker faker = new Faker(new Locale("ru"));
-      return faker.name().lastName() + "-" + faker.name().lastName() + " " + faker.name().firstName();
+      while (true) {
+        String randomLastNamePartOne = generateRandomLastNamePartOne();
+        String randomLastNamePartTwo = generateRandomLastNamePartTwo();
+        String randomFirstName = generateRandomFirstName();
+        if (checkIfRandomPartsOfNameIsInvalid(generateRandomLastNamePartOne(), generateRandomLastNamePartTwo(), generateRandomFirstName())) {
+          return randomLastNamePartOne + "-" + randomLastNamePartTwo + " " + randomFirstName;
+        }
+      }
+    }
+
+    public static boolean checkIfRandomPartsOfNameIsInvalid(String lastNamePartOne, String lastNamePartTwo, String firstName) {
+      if (lastNamePartOne.contains("ё") || lastNamePartTwo.contains("ё") || firstName.contains("ё")) {
+        return false;
+      }
+      return true;
     }
 
     public static String generateIncorrectNameUnderline() {
-      Faker faker = new Faker(new Locale("ru"));
-      return faker.name().lastName() + "_" + faker.name().firstName();
+      while (true) {
+        String randomLastNamePartOne = generateRandomLastNamePartOne();
+        String randomLastNamePartTwo = generateRandomLastNamePartTwo();
+        String randomFirstName = generateRandomFirstName();
+        if (checkIfRandomPartsOfNameIsInvalid(generateRandomLastNamePartOne(), generateRandomLastNamePartTwo(), generateRandomFirstName())) {
+          return randomLastNamePartOne + "_" + randomLastNamePartTwo + "_" + randomFirstName;
+        }
+      }
     }
 
     public static String generateIncorrectNameLatin() {
       Faker faker = new Faker(new Locale("en"));
-      return faker.address().city();
+      return faker.name().lastName() + " " + faker.name().firstName();
     }
 
-    public static String generateIncorrectNameLettersWithUmlaut() {
+    public static String generateIncorrectNameWithLettersUmlaut() {
       Faker faker = new Faker(new Locale("ru"));
       return faker.name().lastName() + " Фёдор";
     }
@@ -51,7 +97,7 @@ public class DataGenerator {
     }
 
     public static String generateIncorrectPhoneCodeCountry() {
-      Faker faker = new Faker(new Locale("ukr"));
+      Faker faker = new Faker(new Locale("en"));
       return faker.phoneNumber().phoneNumber();
     }
 
@@ -59,9 +105,11 @@ public class DataGenerator {
       return LocalDate.now().plusDays(days).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
     }
 
+    // Из списка удалены Гатчина и Красногорск для исключения падения тестов с использованием валидных городов
+    // На баги с Гатчиной и Красногорском сделаны отдельные тесты
     public static String generateCorrectCity() {
       Random rand = new Random();
-      List<String> cityList = Arrays.asList("Майкоп", "Горно-Алтайск", "Уфа", "Улан-Удэ", "Махачкала", "Магас", "Нальчик", "Элиста", "Черкесск", "Петрозаводск", "Сыктывкар", "Симферополь", "Йошкар-Ола", "Саранск", "Якутск", "Владикавказ", "Казань", "Кызыл", "Ижевск", "Абакан", "Грозный", "Чебоксары", "Барнаул", "Чита", "Петропавловск-Камчатский", "Краснодар", "Красноярск", "Пермь", "Владивосток", "Ставрополь", "Хабаровск", "Благовещенск", "Архангельск", "Астрахань", "Белгород", "Брянск", "Владимир", "Волгоград", "Вологда", "Воронеж", "Иваново", "Иркутск", "Калининград", "Калуга", "Кемерово", "Киров", "Кострома", "Курган", "Курск", "Гатчина", "Липецк", "Магадан", "Красногорск", "Мурманск", "Нижний Новгород", "Великий Новгород", "Новосибирск", "Омск", "Оренбург", "Орёл", "Пенза", "Псков", "Ростов-на-Дону", "Рязань", "Самара", "Саратов", "Южно-Сахалинск", "Екатеринбург", "Смоленск", "Тамбов", "Тверь", "Томск", "Тула", "Тюмень", "Ульяновск", "Челябинск", "Ярославль", "Москва", "Санкт-Петербург", "Севастополь", "Биробиджан", "Нарьян-Мар", "Ханты-Мансийск", "Анадырь", "Салехард");
+      List<String> cityList = Arrays.asList("Майкоп", "Горно-Алтайск", "Уфа", "Улан-Удэ", "Махачкала", "Магас", "Нальчик", "Элиста", "Черкесск", "Петрозаводск", "Сыктывкар", "Симферополь", "Йошкар-Ола", "Саранск", "Якутск", "Владикавказ", "Казань", "Кызыл", "Ижевск", "Абакан", "Грозный", "Чебоксары", "Барнаул", "Чита", "Петропавловск-Камчатский", "Краснодар", "Красноярск", "Пермь", "Владивосток", "Ставрополь", "Хабаровск", "Благовещенск", "Архангельск", "Астрахань", "Белгород", "Брянск", "Владимир", "Волгоград", "Вологда", "Воронеж", "Иваново", "Иркутск", "Калининград", "Калуга", "Кемерово", "Киров", "Кострома", "Курган", "Курск", "Липецк", "Магадан", "Мурманск", "Нижний Новгород", "Великий Новгород", "Новосибирск", "Омск", "Оренбург", "Орёл", "Пенза", "Псков", "Ростов-на-Дону", "Рязань", "Самара", "Саратов", "Южно-Сахалинск", "Екатеринбург", "Смоленск", "Тамбов", "Тверь", "Томск", "Тула", "Тюмень", "Ульяновск", "Челябинск", "Ярославль", "Москва", "Санкт-Петербург", "Севастополь", "Биробиджан", "Нарьян-Мар", "Ханты-Мансийск", "Анадырь", "Салехард");
       return cityList.get(rand.nextInt(cityList.size()));
     }
 
@@ -85,8 +133,10 @@ public class DataGenerator {
       }
     }
 
+    // Из списка удалены Гатчина и Красногорск для исключения падения теста на невалидные города
+    // На баги с Гатчиной и Красногорском сделаны отдельные тесты
     public static boolean checkIfCityIsInvalid(String city) {
-      List<String> cityList = Arrays.asList("Майкоп", "Горно-Алтайск", "Уфа", "Улан-Удэ", "Махачкала", "Магас", "Нальчик", "Элиста", "Черкесск", "Петрозаводск", "Сыктывкар", "Симферополь", "Йошкар-Ола", "Саранск", "Якутск", "Владикавказ", "Казань", "Кызыл", "Ижевск", "Абакан", "Грозный", "Чебоксары", "Барнаул", "Чита", "Петропавловск-Камчатский", "Краснодар", "Красноярск", "Пермь", "Владивосток", "Ставрополь", "Хабаровск", "Благовещенск", "Архангельск", "Астрахань", "Белгород", "Брянск", "Владимир", "Волгоград", "Вологда", "Воронеж", "Иваново", "Иркутск", "Калининград", "Калуга", "Кемерово", "Киров", "Кострома", "Курган", "Курск", "Гатчина", "Липецк", "Магадан", "Красногорск", "Мурманск", "Нижний Новгород", "Великий Новгород", "Новосибирск", "Омск", "Оренбург", "Орёл", "Пенза", "Псков", "Ростов-на-Дону", "Рязань", "Самара", "Саратов", "Южно-Сахалинск", "Екатеринбург", "Смоленск", "Тамбов", "Тверь", "Томск", "Тула", "Тюмень", "Ульяновск", "Челябинск", "Ярославль", "Москва", "Санкт-Петербург", "Севастополь", "Биробиджан", "Нарьян-Мар", "Ханты-Мансийск", "Анадырь", "Салехард");
+      List<String> cityList = Arrays.asList("Майкоп", "Горно-Алтайск", "Уфа", "Улан-Удэ", "Махачкала", "Магас", "Нальчик", "Элиста", "Черкесск", "Петрозаводск", "Сыктывкар", "Симферополь", "Йошкар-Ола", "Саранск", "Якутск", "Владикавказ", "Казань", "Кызыл", "Ижевск", "Абакан", "Грозный", "Чебоксары", "Барнаул", "Чита", "Петропавловск-Камчатский", "Краснодар", "Красноярск", "Пермь", "Владивосток", "Ставрополь", "Хабаровск", "Благовещенск", "Архангельск", "Астрахань", "Белгород", "Брянск", "Владимир", "Волгоград", "Вологда", "Воронеж", "Иваново", "Иркутск", "Калининград", "Калуга", "Кемерово", "Киров", "Кострома", "Курган", "Курск", "Липецк", "Магадан", "Мурманск", "Нижний Новгород", "Великий Новгород", "Новосибирск", "Омск", "Оренбург", "Орёл", "Пенза", "Псков", "Ростов-на-Дону", "Рязань", "Самара", "Саратов", "Южно-Сахалинск", "Екатеринбург", "Смоленск", "Тамбов", "Тверь", "Томск", "Тула", "Тюмень", "Ульяновск", "Челябинск", "Ярославль", "Москва", "Санкт-Петербург", "Севастополь", "Биробиджан", "Нарьян-Мар", "Ханты-Мансийск", "Анадырь", "Салехард");
       for (String validCity : cityList) {
         if (Objects.equals(city, validCity)) {
           return false;
