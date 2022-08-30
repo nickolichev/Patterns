@@ -56,14 +56,20 @@ public class PatternsDeliveryTest {
     $x("//input[@placeholder='+7 000 000 00 00']").setValue(correctPhone);
     $x("//*[@data-test-id='agreement']").click();
     $x("//*[@class='button__text']").click();
-    $x("//div[@class='notification__title']").should(visible, Duration.ofSeconds(5))
-            .should(Condition.text("Успешно"));
+    $x("//div[@class='notification__title']").should(visible).should(Condition.text("Успешно"));
+    $x("//div[@class='notification__content']")
+            .should(Condition.text("Встреча успешно запланирована на " + firstMeeting))
+            .should(visible, Duration.ofSeconds(5));
     $x("//input[@placeholder='Дата встречи']").doubleClick().sendKeys(Keys.BACK_SPACE);
     $x("//input[@placeholder='Дата встречи']").setValue(nextMeeting);
     $x("//*[@class='button__text']").click();
-    $x("//div[@data-test-id='replan-notification']").should(visible)
-            .should(Condition.text("У вас уже запланирована встреча на другую дату. Перепланировать?"));
-    $x("//*[@class='button__text']").click();
+    $x("//div[@data-test-id='replan-notification']")
+            .should(Condition.text("У вас уже запланирована встреча на другую дату. Перепланировать?"))
+            .should(visible, Duration.ofSeconds(5));
+    $x("//div[@data-test-id='replan-notification']//*[@class='button__text']").click();
+    $x("//div[@class='notification__content']")
+            .should(Condition.text("Встреча успешно запланирована на " + nextMeeting))
+            .should(visible, Duration.ofSeconds(5));
   }
 
   // Не захардкорен невалидный город, чтобы в случае изменения базы валидных городов тест оставался актуальным
@@ -80,7 +86,8 @@ public class PatternsDeliveryTest {
             .shouldBe(Condition.text("Доставка в выбранный город недоступна"));
   }
 
-  // тестирование бага, см. issues "Система не принимает город "Гатчина". Город в списке валидных городов"
+  // тестирование бага "Сервис не позволяет оформить доставку карты в валидный город Гатчина"
+  // см. issues #1
   @Test
   void testIncorrectFillingCityGatchina() {
     $x("//input[@placeholder='Город']").setValue("Гатчина");
@@ -94,7 +101,8 @@ public class PatternsDeliveryTest {
             .shouldBe(Condition.text("Доставка в выбранный город недоступна"));
   }
 
-  // тестирование бага, см. issues "Система не принимает город "Красногорск". Город в списке валидных городов"
+  // тестирование бага "Сервис не позволяет оформить доставку карты в валидный город Красногорск"
+  // см. issues #2
   @Test
   void testIncorrectFillingCityKrasnogorsk() {
     $x("//input[@placeholder='Город']").setValue("Красногорск");
@@ -170,6 +178,9 @@ public class PatternsDeliveryTest {
     $x("//*[@class='button__text']").click();
     $x("//div[@class='notification__title']").should(visible, Duration.ofSeconds(5))
             .should(Condition.text("Успешно"));
+    $x("//div[@class='notification__content']")
+            .should(Condition.text("Встреча успешно запланирована на " + firstMeeting))
+            .should(visible, Duration.ofSeconds(5));
   }
 
   @Test
@@ -237,7 +248,8 @@ public class PatternsDeliveryTest {
             .shouldBe(Condition.text("Поле обязательно для заполнения"));
   }
 
-  // тестирование бага, см. issues
+  // тестирование бага "Сервис позволяет ввести невалидное количество цифр номера мобильного телефона"
+  // см. issues #3
   @Test
   void testInCorrectFillingPhoneFewerDigits() {
     $x("//input[@placeholder='Город']").setValue(correctCity);
@@ -249,6 +261,9 @@ public class PatternsDeliveryTest {
     $x("//*[@class='button__text']").click();
     $x("//div[@class='notification__title']").should(visible, Duration.ofSeconds(5))
             .should(Condition.text("Успешно"));
+    $x("//div[@class='notification__content']")
+            .should(Condition.text("Встреча успешно запланирована на " + firstMeeting))
+            .should(visible, Duration.ofSeconds(5));
   }
 
   @Test
@@ -262,6 +277,9 @@ public class PatternsDeliveryTest {
     $x("//*[@class='button__text']").click();
     $x("//div[@class='notification__title']").should(visible, Duration.ofSeconds(5))
             .should(Condition.text("Успешно"));
+    $x("//div[@class='notification__content']")
+            .should(Condition.text("Встреча успешно запланирована на " + firstMeeting))
+            .should(visible, Duration.ofSeconds(5));
   }
 
   @Test

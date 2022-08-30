@@ -42,9 +42,9 @@ public class DataGenerator {
 
     public static boolean checkIfRandomFullNameIsInvalid(String lastName, String firstName) {
       if (lastName.contains("ё") || firstName.contains("ё")) {
-        return false;
+        return true;
       }
-      return true;
+      return false;
     }
 
     public static String generateCorrectNameWithHyphen() {
@@ -60,9 +60,9 @@ public class DataGenerator {
 
     public static boolean checkIfRandomPartsOfNameIsInvalid(String lastNamePartOne, String lastNamePartTwo, String firstName) {
       if (lastNamePartOne.contains("ё") || lastNamePartTwo.contains("ё") || firstName.contains("ё")) {
-        return false;
+        return true;
       }
-      return true;
+      return false;
     }
 
     public static String generateIncorrectNameUnderline() {
