@@ -64,3 +64,4 @@ java.lang.IllegalAccessError: class ru.netology.test.PatternsDeliveryTest (in un
 
 <img width="1280" alt="Снимок экрана 2023-03-12 в 21 39 51" src="https://user-images.githubusercontent.com/102659571/224567120-2ce3bdf3-a915-48ae-be70-b2faef04c016.png">
 
+<img width="1280" alt="Снимок экрана 2023-03-12 в 22 12 04" src="https://user-images.githubusercontent.com/102659571/224567310-45173740-1727-4aec-b348-a98700bf00e6.png">
