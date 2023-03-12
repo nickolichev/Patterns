@@ -2,7 +2,9 @@
 Подключение Report Portal
 
 #1 Настроить конфигурацию build.gradle
+
 #2 Зайти на сайт https://reportportal.io/installation (под VPN)
+
 3/ Сохранить себе данные авторизации 
 For user access: login: default password: 1q2w3e или For admin access: login: superadmin password: erebus
 4/ Настроить docker-compose.yml под свою ОС (взять типовые настройки)
