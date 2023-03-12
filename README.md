@@ -61,3 +61,6 @@ java.lang.IllegalAccessError: class ru.netology.test.PatternsDeliveryTest (in un
 #18 Перезапустить тесты
 
 #19 Просмотреть отчеты на http://localhost:8080/ui/#superadmin_personal/launches/all
+
+<img width="1280" alt="Снимок экрана 2023-03-12 в 21 39 51" src="https://user-images.githubusercontent.com/102659571/224567120-2ce3bdf3-a915-48ae-be70-b2faef04c016.png">
+
