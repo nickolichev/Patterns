@@ -1,9 +1,11 @@
-package ru.netology.web;
+package ru.netology.test;
 
 import com.codeborne.selenide.Condition;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.Keys;
+import ru.netology.util.ScreenShooterReportPortalExtension;
 import ru.netology.web.DataGenerator;
 
 import java.time.Duration;
@@ -11,8 +13,12 @@ import java.time.Duration;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$x;
 import static com.codeborne.selenide.Selenide.open;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+@ExtendWith(ScreenShooterReportPortalExtension.class)
 public class PatternsDeliveryTest {
+  private static final Logger logger = LoggerFactory.getLogger(PatternsDeliveryTest.class);
   String correctCity = DataGenerator.Registration.generateCorrectCity();
   String incorrectCity = DataGenerator.Registration.searchInvalidCity();
   String incorrectCityLatin = DataGenerator.Registration.generateCityLatin();
@@ -37,14 +43,41 @@ public class PatternsDeliveryTest {
   @Test
   void testCorrectFilling() {
     $x("//input[@placeholder='Город']").setValue(correctCity);
+    logger.info("В поле ввода веден город " + correctCity);
     $x("//input[@placeholder='Дата встречи']").doubleClick().sendKeys(Keys.BACK_SPACE);
     $x("//input[@placeholder='Дата встречи']").setValue(firstMeeting);
+    logger.info("В поле ввода введена дата первой встречи " + firstMeeting);
     $x("//input[@name='name']").setValue(correctFullName);
+    logger.info("В поле ввода введено корректное значение Имя " + correctFullName);
     $x("//input[@placeholder='+7 000 000 00 00']").setValue(correctPhone);
+    logger.info("В поле ввода введено корректный номер телефона " + correctPhone);
     $x("//*[@data-test-id='agreement']").click();
+    logger.info("Выполнен клик по чекбоксу ");
     $x("//*[@class='button__text']").click();
+    logger.info("Выполнен клик по кнопке Запланировать ");
     $x("//div[@class='notification__title']").should(visible, Duration.ofSeconds(5))
             .should(Condition.text("Успешно"));
+    logger.info("Встреча успешно запланирована на " + firstMeeting);
+  }
+
+  @Test
+  void testFailedForReportPortal() {
+    $x("//input[@placeholder='Город']").setValue(correctCity);
+    logger.info("В поле ввода веден город" + correctCity);
+    $x("//input[@placeholder='Дата встречи']").doubleClick().sendKeys(Keys.BACK_SPACE);
+    $x("//input[@placeholder='Дата встречи']").setValue(firstMeeting);
+    logger.info("В поле ввода введена дата первой встречи" + firstMeeting);
+    $x("//input[@name='name']").setValue(" "); // удалил корректное значение
+    logger.info("В поле ввода введено корректное значение Имя" + correctFullName);
+    $x("//input[@placeholder='+7 000 000 00 00']").setValue(correctPhone);
+    logger.info("В поле ввода введено корректный номер телефона" + correctPhone);
+    $x("//*[@data-test-id='agreement']").click();
+    logger.info("Выполнен клик по чекбоксу");
+    $x("//*[@class='button__text']").click();
+    logger.info("Выполнен клик по кнопке Запланировать");
+    $x("//div[@class='notification__title']").should(visible, Duration.ofSeconds(5))
+            .should(Condition.text("Успешно"));
+    logger.info("Встреча успешно запланирована на " + firstMeeting);
   }
 
   @Test
