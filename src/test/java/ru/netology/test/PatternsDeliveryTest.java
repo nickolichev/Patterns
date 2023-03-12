@@ -1,6 +1,10 @@
 package ru.netology.test;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.logevents.SelenideLogger;
+import io.qameta.allure.selenide.AllureSelenide;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
@@ -28,6 +32,15 @@ public class PatternsDeliveryTest {
   String nextMeeting = DataGenerator.Registration.generateDate(6);
   String incorrectMeeting = DataGenerator.Registration.generateDate(2);
 
+  @BeforeAll
+  static void setUpAll() {
+    SelenideLogger.addListener("allure", new AllureSelenide());
+  }
+
+  @AfterAll
+  static void tearDownAll() {
+    SelenideLogger.removeListener("allure");
+  }
 
   @BeforeEach
   public void setUp() {
@@ -45,6 +58,19 @@ public class PatternsDeliveryTest {
     $x("//*[@class='button__text']").click();
     $x("//div[@class='notification__title']").should(visible, Duration.ofSeconds(5))
             .should(Condition.text("Успешно"));
+  }
+
+  @Test
+  void testFailedForReportAllure() {
+    $x("//input[@placeholder='Город']").setValue(correctCity);
+    $x("//input[@placeholder='Дата встречи']").doubleClick().sendKeys(Keys.BACK_SPACE);
+    $x("//input[@placeholder='Дата встречи']").setValue(firstMeeting);
+    $x("//input[@name='name']").setValue(correctFullName);
+    $x("//input[@placeholder='+7 000 000 00 00']").setValue(correctPhone);
+    $x("//*[@data-test-id='agreement']").click();
+    $x("//*[@class='button__text']").click();
+    $x("//div[@class='notification__title']").should(visible, Duration.ofSeconds(5))
+            .should(Condition.text("Allure"));
   }
 
   @Test
