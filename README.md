@@ -7,7 +7,9 @@
 
 3/ Сохранить себе данные авторизации 
 For user access: login: default password: 1q2w3e или For admin access: login: superadmin password: erebus
+
 4/ Настроить docker-compose.yml под свою ОС (взять типовые настройки)
+
 5/ Произвести интеграцию под фрейморк (Выберите необходимую интеграцию по языку:)
 - в resources создать директорию META-INF/services с файлом org.junit.jupiter.api.extension.Extension
 - в resources создать файлы:
@@ -18,6 +20,7 @@ For user access: login: default password: 1q2w3e или For admin access: login:
 - LoggingUtils 
 - ScreenShooterReportPortalExtension
 (взять код из репозитория https://github.com/netology-code/aqa-code/tree/master/reporting/selenide-reportportal)
+
 6/ Запустить Docker Desktop
 7/ Подключить VPN
 8/ В случае, если запуск docker-compose -p reportportal up -d --force-recreate под VPN упадет с подобной ошибкой 
